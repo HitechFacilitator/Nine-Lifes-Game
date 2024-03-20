@@ -27,6 +27,15 @@ class Game(AbstractBaseModel):
 
         return display
 
+    # def readbyid(self, i):
+    #     query = "SELECT * FROM Game WHERE id_game=?;"
+    #     with sqlite3.connect("NLG") as connection:
+    #         cursor = connection.cursor()
+    #         result = cursor.execute(query, i).fetchone()
+    #
+    #     return result
+
+
     def update(self, i):
         query = "UPDATE Game SET nb_of_players=?, date=? WHERE id_game=?;"
         with sqlite3.connect("NLG") as connection:
