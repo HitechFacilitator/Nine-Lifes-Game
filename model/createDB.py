@@ -19,17 +19,28 @@ player_query = "CREATE TABLE IF NOT EXISTS Player (" \
                "nb_game_won int " \
                ")"
 category_query = "CREATE TABLE IF NOT EXISTS Category (" \
-                 "id_category AUTO_INCREMENT PRIMARY KEY," \
+                 "id_category int AUTO_INCREMENT PRIMARY KEY," \
                  "category_name text," \
                  "nb_of_questions int" \
                  ")"
-playerGame_query = "CREATE TABLE PlayerGame(" \
+playerGame_query = "CREATE TABLE IF NOT EXISTS PlayerGame(" \
                    "playerGame_id int AUTO_INCREMENT PRIMARY KEY," \
                    "id_player text," \
                    "id_game int," \
                    "FOREIGN KEY (id_player) REFERENCES Player(id_player)," \
                    "FOREIGN KEY (id_game) REFERENCES Game(id_game)" \
                    ")"
+quiz_query = "CREATE TABLE IF NOT EXISTS Quiz (" \
+             "id_quiz int AUTO_INCREMENT PRIMARY KEY," \
+             "id_category int," \
+             "question text," \
+             "option1 text," \
+             "option2 text," \
+             "option3 text," \
+             "option4 text," \
+             "correct text," \
+             "FOREIGN KEY (id_category) REFERENCE Category(id_category)" \
+             ");"
 
 with sqlite3.connect(DB) as connection:
     cursor = connection.cursor()

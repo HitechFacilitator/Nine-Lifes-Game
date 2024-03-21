@@ -4,8 +4,7 @@ from base_model import AbstractBaseModel
 
 
 class Game(AbstractBaseModel):
-    def __init__(self, id_game, nb_of_players, date):
-        self.id_game = id_game,
+    def __init__(self, nb_of_players=None, date=None):
         self.nb_players = nb_of_players,
         self.date = date
 
@@ -22,30 +21,33 @@ class Game(AbstractBaseModel):
             results = cursor.execute(query).fetchall()
             display = []
         for result in results:
-            game = Game(id_game=result[0], nb_of_players=result[1], date=result[2])
+            game = Game(nb_of_players=result[1], date=result[2])
             display.append(game)
 
         return display
 
-    def readbyid(self, i):
-        query = "SELECT * FROM Game WHERE id_game=?;"
+    def readById(self, i=None):
+        query = "SELECT * FROM Game WHERE date=?;"
         with sqlite3.connect("NLG") as connection:
             cursor = connection.cursor()
-            result = cursor.execute(query, i).fetchone()
+            result = cursor.execute(query, self.date).fetchone()
 
         return result
 
-    def update(self, i):
-        query = "UPDATE Game SET nb_of_players=?, date=? WHERE id_game=?;"
-        with sqlite3.connect("NLG") as connection:
-            cursor = connection.cursor()
-            cursor.execute(query, (self.nb_players, self.date, self.id_game))
+    def update(self, i=None):
+        if i is not None:
+            query = "UPDATE Game SET nb_of_players=?, date=? WHERE id_game=?;"
+            with sqlite3.connect("NLG") as connection:
+                cursor = connection.cursor()
+                cursor.execute(query, (self.nb_players, self.date, i))
+            return
+        return "No Id for the update"
 
-    def deletebyid(self, i):
-        query = "DELETE FROM Game WHERE id_game=?;;"
+    def deleteById(self, i=None):
+        query = "DELETE FROM Game WHERE date=?;;"
         with sqlite3.connect("NLG") as connection:
             cursor = connection.cursor()
-            cursor.execute(query, i)
+            cursor.execute(query, self.date)
 
     def delete(self):
         query = "DELETE FROM Game;"

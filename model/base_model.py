@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import createDB
+
 
 class AbstractBaseModel(ABC):
     @abstractmethod
@@ -10,7 +12,15 @@ class AbstractBaseModel(ABC):
         pass
 
     @abstractmethod
-    def update(self, i):
+    def readById(self, i=None):
+        pass
+
+    @abstractmethod
+    def update(self, i=None):
+        pass
+
+    @abstractmethod
+    def deleteById(self, i=None):
         pass
 
     @abstractmethod
