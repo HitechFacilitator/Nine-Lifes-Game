@@ -27,20 +27,25 @@ class Game(AbstractBaseModel):
 
         return display
 
-    # def readbyid(self, i):
-    #     query = "SELECT * FROM Game WHERE id_game=?;"
-    #     with sqlite3.connect("NLG") as connection:
-    #         cursor = connection.cursor()
-    #         result = cursor.execute(query, i).fetchone()
-    #
-    #     return result
+    def readbyid(self, i):
+        query = "SELECT * FROM Game WHERE id_game=?;"
+        with sqlite3.connect("NLG") as connection:
+            cursor = connection.cursor()
+            result = cursor.execute(query, i).fetchone()
 
+        return result
 
     def update(self, i):
         query = "UPDATE Game SET nb_of_players=?, date=? WHERE id_game=?;"
         with sqlite3.connect("NLG") as connection:
             cursor = connection.cursor()
             cursor.execute(query, (self.nb_players, self.date, self.id_game))
+
+    def deletebyid(self, i):
+        query = "DELETE FROM Game WHERE id_game=?;;"
+        with sqlite3.connect("NLG") as connection:
+            cursor = connection.cursor()
+            cursor.execute(query, i)
 
     def delete(self):
         query = "DELETE FROM Game;"
